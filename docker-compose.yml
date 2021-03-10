@@ -4,11 +4,10 @@ services:
   nodeapi:
     build: ./node
     container_name: nodeapi
-    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh
-    command: ["npx", "nodemon", "index.js"]
     tty: true
     volumes:
       - ./node:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
     networks:
       - node-network
     depends_on:
@@ -40,3 +39,6 @@ services:
 networks:
   node-network:
     driver: bridge
+
+volumes:
+  node_modules:
